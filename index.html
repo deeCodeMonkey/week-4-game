@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gems Game</title>
+    <!-- Added link to the jQuery library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+
+
+</head>
+<body>
+    <div class="jumbotron">
+        <h1 class="text-center">Crystals Collector</h1>
+        <h3 class="text-center">Wins:</h3><h3 class="text-center" id="points-won"></h3>
+        <h3 class="text-center">Losses:</h3><h3 class="text-center" id="points-lost"></h3>
+        <div class="container text-center">
+            <img id="gem-blue" src="/assets/images/blue.jpeg" alt="blue gem" style="width:100px;height:100px;">
+            <img id="gem-green" src="/assets/images/green.jpeg" alt="green gem" style="width:100px;height:100px;">
+            <img id="gem-red" src="/assets/images/red.jpeg" alt="red gem" style="width:100px;height:100px;">
+            <img id="gem-purple" src="/assets/images/purple.jpeg" alt="purple gem" style="width:100px;height:100px;">
+        </div>
+
+    </div>
+    <div class="container text-center">
+        <div class="row"><h2>Random Number:</h2><h2 id="random-number"></h2></div>
+        <div class="row"><h2>Your Score:</h2><h2 id="your-score"></h2></div>
+        <div class="row"><h2 id="message"></h2></div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var wonCounter = 0;
+            var lostCounter = 0;
+            runGame();
+            
+
+            function runGame() {
+
+                var isPlaying = true;
+                var yourScore = 0;
+                var randomNumber = randomGoal();
+
+                $("#random-number").html(randomNumber);
+                $("#your-score").html(yourScore);
+
+
+                //re-usable function - generates random number
+                function randomGoal() {
+                    var temp = Math.ceil(Math.random() * 101) + 19;
+                    return temp;
+                }
+
+                function random() {
+                    var temp = Math.ceil(Math.random() * 11) + 1;
+                    return temp;
+                }
+
+
+                //Gems
+                var blueGem = random();
+                console.log(blueGem);
+
+                $("#gem-blue").on("click", function () {
+                    console.log("click-blue");
+                    yourScore = yourScore + blueGem;
+                    $("#your-score").html(yourScore);
+                    checkScore(yourScore);
+                });
+
+                var greenGem = random();
+                console.log(greenGem);
+
+                $("#gem-green").on("click", function () {
+                    console.log("click-green");
+                    yourScore = yourScore + greenGem;
+                    $("#your-score").html(yourScore);
+                    checkScore(yourScore);
+                });
+
+                var redGem = random();
+                console.log(redGem);
+
+                $("#gem-red").on("click", function () {
+                    console.log("click-red");
+                    yourScore = yourScore + redGem;
+                    $("#your-score").html(yourScore);
+                    checkScore(yourScore);
+                });
+
+                var purpleGem = random();
+                console.log(purpleGem);
+
+                $("#gem-purple").on("click", function () {
+                    console.log("click-purple");
+                    yourScore = yourScore + purpleGem;
+                    $("#your-score").html(yourScore);
+                    checkScore(yourScore);
+                });
+
+
+                function checkScore(score) {
+                    if (!isPlaying) {
+                        return;
+                    }
+
+                    if (score === randomNumber) {
+                        wonCounter++;
+                        $("#message").html("You Won! New Game Started.");
+                        isPlaying = false;
+                        runGame();
+
+                    } else if (score > randomNumber) {
+                        lostCounter++;
+                        $("#message").html("You Lost! New Game Started.");
+                        isPlaying = false;
+                        runGame();
+                    } else {
+                        console.log("WAITING");
+                    }
+                    $("#points-won").html(wonCounter);
+                    $("#points-lost").html(lostCounter);
+                }
+
+            }
+        });
+
+    </script>
+</body>
+</html>
